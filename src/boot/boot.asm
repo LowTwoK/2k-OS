@@ -8,7 +8,7 @@ start:
     
     mov [BOOT_DRIVE], dl
     
-    mov ax, 0x0013
+    mov ax, 0x0012
     int 0x10
     
     xor ax, ax
@@ -18,7 +18,7 @@ start:
     mov sp, 0x7c00
 
     ; Disk load kernel
-    mov bx, KERNEL_OFFSET
+        mov bx, KERNEL_OFFSET
     mov dh, 15 ; Sector
     mov dl, [BOOT_DRIVE]
     call disk_load

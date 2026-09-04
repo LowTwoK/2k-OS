@@ -1,16 +1,11 @@
 #include "../include/screen.h"
-#include "../io/screen.c"
 
 void twok_main()
 {
-    clear(0x00); // Black
-    // x,y,w,h,color
-    draw_rect(50, 50, 100, 60, 4);
-    draw_rect(180, 50, 80, 80, 1);
-    
-    //Line
-    for(int i=0; i<320; i++)
-    {
-        draw_pixel(i, 150, 2);
-    }
+    clear(15);
+
+    draw_rect(0, 0, 640, 30, 1);
+
+    draw_string("2k OS By Low2k", 10, 10, 15);
+    draw_string("ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz", 10, 20, 15);
 }

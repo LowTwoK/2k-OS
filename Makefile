@@ -6,7 +6,7 @@ QEMU = qemu-system-x86_64
 CFLAGS = -m32 -ffreestanding -fno-pie -c
 LDFLAGS = -m elf_i386 -Ttext 0x1000 --oformat binary
 
-# Directories
+# Dir
 SRC_DIR = src
 BUILD_DIR = build
 
@@ -14,10 +14,15 @@ BUILD_DIR = build
 BOOT_SRC = $(SRC_DIR)/boot/boot.asm
 ENTRY_SRC = $(SRC_DIR)/kernel/kernel_entry.asm
 KERNEL_C = $(SRC_DIR)/kernel/main.c
+SCREEN_C = $(SRC_DIR)/io/screen.c
+PORT_C = $(SRC_DIR)/io/port.c
 
+# output
 BOOT_BIN = $(BUILD_DIR)/boot.bin
 ENTRY_OBJ = $(BUILD_DIR)/kernel_entry.o
 KERNEL_OBJ = $(BUILD_DIR)/kernel.o
+SCREEN_OBJ = $(BUILD_DIR)/screen.o
+PORT_OBJ = $(BUILD_DIR)/port.o
 KERNEL_BIN = $(BUILD_DIR)/kernel.bin
 OS_IMAGE = $(BUILD_DIR)/os_image.bin
 
@@ -37,13 +42,22 @@ $(KERNEL_OBJ): $(KERNEL_C)
 	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
-$(KERNEL_BIN): $(ENTRY_OBJ) $(KERNEL_OBJ)
+$(SCREEN_OBJ): $(SCREEN_C)
+	@mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(PORT_OBJ): $(PORT_C)
+	@mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(KERNEL_BIN): $(ENTRY_OBJ) $(KERNEL_OBJ) $(SCREEN_OBJ) $(PORT_OBJ)
 	$(LD) $(LDFLAGS) -o $@ $^
 
 $(OS_IMAGE): $(BOOT_BIN) $(KERNEL_BIN)
 	cat $(BOOT_BIN) $(KERNEL_BIN) > $(BUILD_DIR)/temp.bin
-	dd if=/dev/zero of=$(OS_IMAGE) bs=1024 count=1440
-	dd if=$(BUILD_DIR)/temp.bin of=$(OS_IMAGE) conv=notrunc
+	dd if=/dev/zero of=$(OS_IMAGE) bs=1024 count=1440 status=none
+	dd if=$(BUILD_DIR)/temp.bin of=$(OS_IMAGE) conv=notrunc status=none
+	@rm -f $(BUILD_DIR)/temp.bin
 
 run: $(OS_IMAGE)
 	$(QEMU) -drive format=raw,file=$(OS_IMAGE)
