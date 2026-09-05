@@ -1,1 +1,2 @@
-lower k, w, y
+Fixed: { , } , Lower Case , @ , "", |
+Needs Fix: 
