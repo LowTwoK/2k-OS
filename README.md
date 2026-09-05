@@ -1,4 +1,4 @@
-### 2k Operating System  Version BETA 1.0
+# 2k Operating System  Version BETA 1.0
 
 ## Introduction
 
@@ -17,7 +17,7 @@ I'm not the programming expert or Computer nerd, I just love Computer Stuff and 
 
 2k OS BETA 1.0 is not out to download yet but i'll call it a version ;>
 
-# What i add to it
+### What i add to it
 
 So BETA 1.0, basically works just booting up from **Floppy Disk** and Clear the screen with White color, I add fonts to it but there's no **Keyboard Input** yet.
 
@@ -31,4 +31,4 @@ If you want to join my journey and help me with 2k OS, you can subscribe to my Y
 
 ---
 
-# Rest In Peace! Terry A. Davis
+Rest In Peace! Terry A. Davis
